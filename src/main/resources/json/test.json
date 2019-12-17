@@ -1,0 +1,37 @@
+{
+    "status": 0,
+    "body": {
+      "series": [
+        {
+          "deviceid": "move",
+          "model": 1,
+          "ecg": {
+            "signalid": 20,
+            "afib": 25
+          },
+          "bloodpressure": {
+            "diastole": 10,
+            "systole": 15
+          },
+          "heart_rate": 55,
+          "timestamp": 1575975600
+        },
+        {
+            "deviceid": "move",
+            "model": 1,
+            "ecg": {
+              "signalid": 30,
+              "afib": 35
+            },
+            "bloodpressure": {
+              "diastole": 40,
+              "systole": 45
+            },
+            "heart_rate": 50,
+            "timestamp": 1575975610
+          }
+      ],
+      "offset": 0,
+      "more": true
+    }
+  }
