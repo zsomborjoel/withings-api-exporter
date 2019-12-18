@@ -2,7 +2,6 @@
 package com.api.exporter.model.HeartListApi;
 
 import java.util.List;
-import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

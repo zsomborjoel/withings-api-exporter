@@ -1,0 +1,10 @@
+{
+    "status": 1,
+    "body": {
+      "signal": [
+        3
+      ],
+      "sampling_frequency": 5,
+      "wearposition": 10
+    }
+  }

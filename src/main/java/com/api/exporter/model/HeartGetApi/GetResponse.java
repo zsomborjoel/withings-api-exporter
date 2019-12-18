@@ -1,5 +1,5 @@
+package com.api.exporter.model.HeartGetApi;
 
-package com.api.exporter.model.HeartListApi;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,8 +8,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-import com.api.exporter.model.HeartListApi.ListBody;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -17,13 +15,13 @@ import com.api.exporter.model.HeartListApi.ListBody;
     "status",
     "body"
 })
-public class  ListResponse {
+public class GetResponse {
 
     @JsonProperty("status")
     private Integer status;
-    
+
     @JsonProperty("body")
-    private ListBody body;
+    private GetBody body;
 
     public Integer getStatus() {
         return this.status;
@@ -33,11 +31,11 @@ public class  ListResponse {
         this.status = status;
     }
 
-    public ListBody getBody() {
+    public GetBody getBody() {
         return this.body;
     }
 
-    public void setBody(ListBody body) {
+    public void setBody(GetBody body) {
         this.body = body;
     }
 
