@@ -17,10 +17,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -73,5 +71,77 @@ public class Series {
     @JsonIgnore
     @Column(name = "call_enddate", nullable = true)
     private LocalDate enddate;
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getDeviceid() {
+        return this.deviceid;
+    }
+
+    public void setDeviceid(String deviceid) {
+        this.deviceid = deviceid;
+    }
+
+    public Integer getModel() {
+        return this.model;
+    }
+
+    public void setModel(Integer model) {
+        this.model = model;
+    }
+
+    public Ecg getEcg() {
+        return this.ecg;
+    }
+
+    public void setEcg(Ecg ecg) {
+        this.ecg = ecg;
+    }
+
+    public Bloodpressure getBloodpressure() {
+        return this.bloodpressure;
+    }
+
+    public void setBloodpressure(Bloodpressure bloodpressure) {
+        this.bloodpressure = bloodpressure;
+    }
+
+    public Integer getHeartRate() {
+        return this.heartRate;
+    }
+
+    public void setHeartRate(Integer heartRate) {
+        this.heartRate = heartRate;
+    }
+
+    public Integer getTimestamp() {
+        return this.timestamp;
+    }
+
+    public void setTimestamp(Integer timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public LocalDate getStartdate() {
+        return this.startdate;
+    }
+
+    public void setStartdate(LocalDate startdate) {
+        this.startdate = startdate;
+    }
+
+    public LocalDate getEnddate() {
+        return this.enddate;
+    }
+
+    public void setEnddate(LocalDate enddate) {
+        this.enddate = enddate;
+    }
    
 }

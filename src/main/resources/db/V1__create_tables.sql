@@ -22,11 +22,20 @@ CREATE INDEX IF NOT EXISTS call_enddate_idx ON withings.heartlist (call_enddate)
 CREATE TABLE IF NOT EXISTS withings.heartget (
     heartget_id INT PRIMARY KEY,
     signal_id INT,
-    signal INT,
     sampling_frequency INT,
     wearposition INT,
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE INDEX IF NOT EXISTS signal_id_get_idx ON withings.heartlist (signal_id);
+CREATE INDEX IF NOT EXISTS heart_get_id_get_idx ON withings.heartget (heartget_id);
+
+CREATE TABLE IF NOT EXISTS withings.heartgetsignal (
+    get_body_heartget_id INT,
+    signal INT,
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS heart_get_id_getsignal_idx ON withings.heartgetsignal (get_body_heartget_id);
+
 

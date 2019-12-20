@@ -1,6 +1,7 @@
 
 package com.api.exporter.model.HeartListApi;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -8,10 +9,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,9 +26,11 @@ import lombok.NoArgsConstructor;
 public class Bloodpressure {
 
     @JsonProperty("diastole")
+    @Column(name = "diastole", nullable = true)
     private Integer diastole;
 
     @JsonProperty("systole")
+    @Column(name = "systole", nullable = true)
     private Integer systole;
     
 }
