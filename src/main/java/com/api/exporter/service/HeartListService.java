@@ -16,13 +16,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Service
 public class HeartListService {
 
 	private static final Logger logger = LoggerFactory.getLogger(HeartListService.class);
@@ -36,8 +36,8 @@ public class HeartListService {
 	
 	private RestTemplate restTemplate;
 	
-	@Value("${withings.api.path}")
-	private String apiPath;
+	@Value("${withings.api.host}")
+	private String apiHost;
 
 	public ListResponse getResponse() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
@@ -73,7 +73,7 @@ public class HeartListService {
 		hlRepository.saveAll(series);
 	}
 
-	@Bean
+	//@Bean
 	private void runHeartList() throws IOException {
 		saveSeries();
 	}

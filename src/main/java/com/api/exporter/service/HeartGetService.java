@@ -28,8 +28,8 @@ public class HeartGetService {
 
     private RestTemplate restTemplate;
 
-    @Value("${withings.api.path}")
-    private String apiPath;
+    @Value("${withings.api.host}")
+    private String apiHost;
 
     public GetResponse getResponse() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
@@ -53,7 +53,7 @@ public class HeartGetService {
 		heartGetRepository.save(getBody);
 	}
 
-    @Bean
+    //@Bean
 	private void runHeartGet() throws IOException {
         saveBody();
     }
