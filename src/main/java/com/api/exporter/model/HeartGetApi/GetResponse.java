@@ -1,12 +1,12 @@
 package com.api.exporter.model.HeartGetApi;
 
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
     "status",
     "body"
 })
+@ToString
 public class GetResponse {
 
     @JsonProperty("status")

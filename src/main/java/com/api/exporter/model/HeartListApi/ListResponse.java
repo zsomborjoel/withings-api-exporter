@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import com.api.exporter.model.HeartListApi.ListBody;
 
@@ -17,6 +18,7 @@ import com.api.exporter.model.HeartListApi.ListBody;
     "status",
     "body"
 })
+@ToString
 public class  ListResponse {
 
     @JsonProperty("status")

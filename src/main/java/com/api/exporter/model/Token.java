@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
 "access_token",
@@ -13,6 +17,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 "refresh_token",
 "userid"
 })
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Token {
 
     @JsonProperty("access_token")
@@ -32,18 +39,6 @@ public class Token {
 
     @JsonProperty("userid")
     private Integer userid;
-
-    public Token() {
-    }
-
-    public Token(String accessToken, Integer expiresIn, String tokenType, String scope, String refreshToken, Integer userid) {
-        this.accessToken = accessToken;
-        this.expiresIn = expiresIn;
-        this.tokenType = tokenType;
-        this.scope = scope;
-        this.refreshToken = refreshToken;
-        this.userid = userid;
-    }
 
     public String getAccessToken() {
         return this.accessToken;

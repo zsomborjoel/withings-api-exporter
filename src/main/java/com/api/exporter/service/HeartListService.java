@@ -1,21 +1,18 @@
 package com.api.exporter.service;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalDate;
+import java.time.ZoneId;
 
+import com.api.exporter.model.ApplicationProperties;
 import com.api.exporter.model.HeartListApi.ListResponse;
 import com.api.exporter.model.HeartListApi.Series;
 import com.api.exporter.repository.HeartListRepository;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -33,28 +30,68 @@ public class HeartListService {
 	
     @Autowired
 	private HeartListRepository hlRepository;
+
+	@Autowired
+	private ApplicationProperties applicationProperties;
 	
+	@Autowired
 	private RestTemplate restTemplate;
 	
 	@Value("${withings.api.host}")
 	private String apiHost;
 
+	/**
+	 * Converts date to unixtimestamp for API call
+	 * @param date
+	 * @return
+	 */
+	public long dateToEpoch(LocalDate date) {
+		ZoneId zoneId = ZoneId.systemDefault();
+
+        return date.atStartOfDay(zoneId).toEpochSecond();
+	}
+
+	/**
+	 * Define url based on host, startdate, enddate, token
+	 * @return
+	 */
+	public String makeUrl() {
+		String url = apiHost + "/heart?action=list" + 
+					"&startdate=" + dateToEpoch(previousDay) +
+					"&enddate=" + dateToEpoch(now) +
+					"&access_token=" + applicationProperties.getAccessToken();
+
+		return url;
+	}
+
+	/**
+	 * Gives back whole API response as an object
+	 * @return
+	 * @throws IOException
+	 */
 	public ListResponse getResponse() throws IOException {
-		ObjectMapper mapper = new ObjectMapper();
-		mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-		TypeReference<ListResponse> typeReference = new TypeReference<ListResponse>(){};
-		InputStream inputStream = TypeReference.class.getResourceAsStream("/json/test.json");
-		
-		return mapper.readValue(inputStream,typeReference);
-		//return restTemplate.getForObject("https://gturnquist-quoters.cfapps.io/api/random", ListResponse.class);
+		String url = makeUrl();
+
+		return restTemplate.getForObject(url, ListResponse.class);
+
 	}
   
+	/**
+	 * Gives back API response Body as an object
+	 * @return
+	 * @throws IOException
+	 */
 	public List<Series> getSeriesData() throws IOException {
 		ListResponse listResponse = getResponse();
 
 		return listResponse.getBody().getSeries();
 	}
 
+	/**
+	 * Gives back signalIds for HeartGet API call
+	 * @return
+	 * @throws IOException
+	 */
 	public List<Integer> getSignalIds() throws IOException {
 		List<Integer> signalIds = new ArrayList<>();
 		List<Series> series = getSeriesData();
@@ -63,7 +100,11 @@ public class HeartListService {
 		return signalIds;
 	}
 	
-	public void saveSeries() throws IOException {
+	/**
+	 * Persist Series data
+	 * @throws IOException
+	 */
+	private void saveSeries() throws IOException {
 		List<Series> series = getSeriesData();
 		series.forEach(s -> {
 			s.setEnddate(now); 
@@ -73,9 +114,13 @@ public class HeartListService {
 		hlRepository.saveAll(series);
 	}
 
-	//@Bean
-	private void runHeartList() throws IOException {
+	/**
+	 * Starts Withings HeartList API persisting mechanism
+	 * @throws IOException
+	 */
+	public void runHeartList() throws IOException {
 		saveSeries();
+		logger.info("HeartList Data load finished");
 	}
 
 }

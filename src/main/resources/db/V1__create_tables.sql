@@ -31,6 +31,7 @@ CREATE INDEX IF NOT EXISTS signal_id_get_idx ON withings.heartlist (signal_id);
 CREATE INDEX IF NOT EXISTS heart_get_id_get_idx ON withings.heartget (heartget_id);
 
 CREATE TABLE IF NOT EXISTS withings.heartgetsignal (
+    heartgetsignal_id SERIAL PRIMARY KEY, 
     get_body_heartget_id INT,
     signal INT,
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP

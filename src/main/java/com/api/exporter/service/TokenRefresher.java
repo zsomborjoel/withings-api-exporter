@@ -15,6 +15,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import com.api.exporter.model.ApplicationProperties;
 import com.api.exporter.model.Token;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -27,7 +28,7 @@ public class TokenRefresher {
     private static final Logger logger = LoggerFactory.getLogger(TokenRefresher.class);
 
     @Value("${withings.api.tokenhost}")
-    private String apiHost;
+    private String apiTokenHost;
 
     @Value("${withings.api.clientid}")
     private String clientId;
@@ -35,17 +36,16 @@ public class TokenRefresher {
     @Value("${withings.api.clientsecret}")
     private String clientSecret;
 
-    @Value("${withings.api.refreshtoken}")
-    private String refreshToken;
-
-    @Value("${withings.api.accesstoken}")
-    private String accessToken;
-
     @Autowired
     private ApplicationProperties applicationProperties;
 
-    public void saveToJson(String json) throws IOException {
 
+    /**
+     * Saves token to backup file
+     * @param json
+     * @throws IOException
+     */
+    private void saveToJson(String json) throws IOException {
         File resource = new ClassPathResource("json/token.json").getFile();
 
         FileWriter fileWriter = new FileWriter(resource);
@@ -56,11 +56,13 @@ public class TokenRefresher {
         logger.info("Successfully wrote token to the token file");
 
     }
-
-
     
+    /**
+     * First I get the token in string format and save it for safety
+     * @return API token in string format
+     * @throws Exception
+     */
     public String getJsonToken() throws Exception {
-
         String output;
         StringBuffer response = new StringBuffer();
 
@@ -69,11 +71,10 @@ public class TokenRefresher {
                                 "grant_type=refresh_token" +
                                 "&client_id="     + clientId +
                                 "&client_secret=" + clientSecret +
-                                "&refresh_token=" + refreshToken + 
+                                "&refresh_token=" + applicationProperties.getRefreshToken() + 
                                 "\"" +
-                                " \"" + apiHost + "\"";       
+                                " \"" + apiTokenHost + "\"";     
 
-        System.out.println(curl);
         Process process = Runtime.getRuntime().exec(curl);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         
@@ -88,23 +89,33 @@ public class TokenRefresher {
 
     }
 
-    
+    /**
+     * Gives back API token
+     * @return Token object
+     * @throws Exception
+     */
     public Token getResponse() throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-		TypeReference<Token> typeReference = new TypeReference<Token>(){};
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        
+        TypeReference<Token> typeReference = new TypeReference<Token>(){};
         String jsonToken = getJsonToken();
         
-        return mapper.readValue(jsonToken,typeReference);
+        return mapper.readValue(jsonToken, typeReference);
         
 	}
     
-
-    public void refresh() throws Exception {
-        
+    /**
+     * Runs refresh mechanism
+     * @throws Exception
+     */
+    public void refresh() throws Exception {    
         Token token = getResponse();
+
         applicationProperties.setAccessToken(token.getAccessToken());
         applicationProperties.setRefreshToken(token.getRefreshToken());
+
+        logger.info("Tokens are refreshed successfully");
 
     }
 
