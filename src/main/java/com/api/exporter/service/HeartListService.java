@@ -116,11 +116,16 @@ public class HeartListService {
 
 	/**
 	 * Starts Withings HeartList API persisting mechanism
-	 * @throws IOException
+	 * 
 	 */
-	public void runHeartList() throws IOException {
-		saveSeries();
-		logger.info("HeartList Data load finished");
+	public void runHeartList() {
+		try {
+			logger.info("HeartList Data load started");
+			saveSeries();
+			logger.info("HeartList Data load finished");
+		} catch(Exception e) {
+			logger.error("Exception occured during HeartList load ", e);
+		}
 	}
 
 }

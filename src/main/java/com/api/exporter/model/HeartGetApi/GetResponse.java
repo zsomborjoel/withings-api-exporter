@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,7 +14,6 @@ import lombok.ToString;
     "status",
     "body"
 })
-@ToString
 public class GetResponse {
 
     @JsonProperty("status")
@@ -38,6 +36,14 @@ public class GetResponse {
 
     public void setBody(GetBody body) {
         this.body = body;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+            " status='" + getStatus() + "'" +
+            ", body='" + getBody() + "'" +
+            "}";
     }
 
 }

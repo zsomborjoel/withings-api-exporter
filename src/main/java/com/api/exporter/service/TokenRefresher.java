@@ -8,9 +8,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
-
 import java.io.File;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,7 +18,6 @@ import com.api.exporter.model.Token;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 
 @Component
 public class TokenRefresher {
@@ -39,7 +36,6 @@ public class TokenRefresher {
     @Autowired
     private ApplicationProperties applicationProperties;
 
-
     /**
      * Saves token to backup file
      * @param json
@@ -54,7 +50,6 @@ public class TokenRefresher {
         fileWriter.close();
     
         logger.info("Successfully wrote token to the token file");
-
     }
     
     /**
@@ -86,7 +81,6 @@ public class TokenRefresher {
         saveToJson(response.toString());
 
         return response.toString();
-
     }
 
     /**
@@ -101,22 +95,22 @@ public class TokenRefresher {
         TypeReference<Token> typeReference = new TypeReference<Token>(){};
         String jsonToken = getJsonToken();
         
-        return mapper.readValue(jsonToken, typeReference);
-        
+        return mapper.readValue(jsonToken, typeReference);   
 	}
     
     /**
      * Runs refresh mechanism
-     * @throws Exception
+     * 
      */
-    public void refresh() throws Exception {    
-        Token token = getResponse();
-
-        applicationProperties.setAccessToken(token.getAccessToken());
-        applicationProperties.setRefreshToken(token.getRefreshToken());
-
-        logger.info("Tokens are refreshed successfully");
-
+    public void refresh() {    
+        try {
+            Token token = getResponse();
+            applicationProperties.setAccessToken(token.getAccessToken());
+            applicationProperties.setRefreshToken(token.getRefreshToken());
+            logger.info("Tokens are refreshed successfully");
+        } catch(Exception e) {
+            logger.error("Exception occured during token refresh ", e);
+        }
     }
 
 }

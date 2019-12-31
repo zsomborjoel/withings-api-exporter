@@ -3,6 +3,7 @@ package com.api.exporter.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -20,24 +21,25 @@ public class Scheduler {
     @Autowired
     private TokenRefresher tokenRefresher;
 
-    //@Scheduled(fixedRate = 5000)
-    public void test() {
-        System.out.println("test");
-    }
-
     /**
-     * Runs token refresher
+     * Runs token refresher every 2 hours
      * @throws Exception
      */
+    //@Scheduled(fixedRate = 120*60*1000)
+    //@Scheduled(cron = "0 0 0/2 1/1 * ? *")
     public void refreshToken() throws Exception {
         tokenRefresher.refresh();
     }
 
     /**
-     * Runs necessary jobs
+     * Runs necessary jobs daily 
      * @throws Exception
      */
+    //@Scheduled(fixedRate = 1440*60*1000)
+    //@Scheduled(cron = "0 0 0 1/1 * ? *")
+    @Bean
     public void runJobs() throws Exception {
+        refreshToken();
         heartListService.runHeartList();
         heartGetService.runHeartGet();
     }

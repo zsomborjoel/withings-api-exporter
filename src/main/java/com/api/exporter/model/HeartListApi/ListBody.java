@@ -57,5 +57,13 @@ public class ListBody {
         this.more = more;
     }
    
+    @Override
+    public String toString() {
+        return "{" +
+            " series='" + getSeries() + "'" +
+            ", offset='" + getOffset() + "'" +
+            ", more='" + isMore() + "'" +
+            "}";
+    }
 
 }

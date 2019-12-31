@@ -18,12 +18,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -55,5 +51,47 @@ public class GetBody {
     @JsonProperty("wearposition")
     @Column(name = "wearposition", nullable = true)
     private Integer wearposition;
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<Integer> getSignal() {
+        return this.signal;
+    }
+
+    public void setSignal(List<Integer> signal) {
+        this.signal = signal;
+    }
+
+    public Integer getSamplingFrequency() {
+        return this.samplingFrequency;
+    }
+
+    public void setSamplingFrequency(Integer samplingFrequency) {
+        this.samplingFrequency = samplingFrequency;
+    }
+
+    public Integer getWearposition() {
+        return this.wearposition;
+    }
+
+    public void setWearposition(Integer wearposition) {
+        this.wearposition = wearposition;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+            " id='" + getId() + "'" +
+            ", signal='" + getSignal() + "'" +
+            ", samplingFrequency='" + getSamplingFrequency() + "'" +
+            ", wearposition='" + getWearposition() + "'" +
+            "}";
+    }
 
 }

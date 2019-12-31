@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -50,25 +49,13 @@ public class HeartGetService {
 	}
 
 	/**
-	 * Gives back whole API response as an object
-	 * @param signalId
-	 * @return
-	 * @throws IOException
-	 */
-    public GetResponse getResponse(Integer signalId) throws IOException {
-		String url = makeUrl(signalId);
-
-		return restTemplate.getForObject(url, GetResponse.class);
-	}
-  
-	/**
 	 * Gives back API response Body as an object
 	 * @param signalId
 	 * @return
 	 * @throws IOException
 	 */
-	public GetBody getBodyData(Integer signalId) throws IOException {
-        GetResponse getResponse = getResponse(signalId);
+	public GetBody getBodyData(String url) throws IOException {
+        GetResponse getResponse = restTemplate.getForObject(url, GetResponse.class);
         
 		return getResponse.getBody();
 	}
@@ -79,7 +66,8 @@ public class HeartGetService {
 	 * @throws IOException
 	 */
 	private void saveBody(Integer signalId) throws IOException {
-		GetBody getBody = getBodyData(signalId);
+		String url = makeUrl(signalId);
+		GetBody getBody = getBodyData(url);
 		
 		heartGetRepository.save(getBody);
 	}
@@ -89,11 +77,16 @@ public class HeartGetService {
 	 * @throws IOException
 	 */
 	public void runHeartGet() throws IOException {
-		List<Integer> signalIds = heartListService.getSignalIds();
-		for (Integer signalId : signalIds) {
-			saveBody(signalId);
+		try {
+			List<Integer> signalIds = heartListService.getSignalIds();
+			logger.info("HeartGet Data load started");
+			for (Integer signalId : signalIds) {
+				saveBody(signalId);
+			}
+			logger.info("HeartGet Data load finished");
+		} catch(Exception e) {
+			logger.error("Exception occured during Heartget load ", e);
 		}
-		logger.info("HeartGet Data load finished");
 	}
 
 }

@@ -144,4 +144,19 @@ public class Series {
         this.enddate = enddate;
     }
    
+    @Override
+    public String toString() {
+        return "{" +
+            " id='" + getId() + "'" +
+            ", deviceid='" + getDeviceid() + "'" +
+            ", model='" + getModel() + "'" +
+            ", ecg='" + getEcg() + "'" +
+            ", bloodpressure='" + getBloodpressure() + "'" +
+            ", heartRate='" + getHeartRate() + "'" +
+            ", timestamp='" + getTimestamp() + "'" +
+            ", startdate='" + getStartdate() + "'" +
+            ", enddate='" + getEnddate() + "'" +
+            "}";
+    }
+    
 }

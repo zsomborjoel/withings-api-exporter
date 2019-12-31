@@ -18,7 +18,6 @@ import com.api.exporter.model.HeartListApi.ListBody;
     "status",
     "body"
 })
-@ToString
 public class  ListResponse {
 
     @JsonProperty("status")
@@ -43,4 +42,12 @@ public class  ListResponse {
         this.body = body;
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+            " status='" + getStatus() + "'" +
+            ", body='" + getBody() + "'" +
+            "}";
+    }
+    
 }
