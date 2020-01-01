@@ -33,6 +33,9 @@ public class TokenRefresher {
     @Value("${withings.api.clientsecret}")
     private String clientSecret;
 
+    @Value("${token.path}")
+    private String tokenFile;
+
     @Autowired
     private ApplicationProperties applicationProperties;
 
@@ -42,7 +45,7 @@ public class TokenRefresher {
      * @throws IOException
      */
     private void saveToJson(String json) throws IOException {
-        File resource = new ClassPathResource("json/token.json").getFile();
+        File resource = new File(tokenFile);
 
         FileWriter fileWriter = new FileWriter(resource);
         fileWriter.write(json);
@@ -79,6 +82,8 @@ public class TokenRefresher {
         bufferedReader.close();
 
         saveToJson(response.toString());
+
+        logger.info("New token: " + response.toString());
 
         return response.toString();
     }

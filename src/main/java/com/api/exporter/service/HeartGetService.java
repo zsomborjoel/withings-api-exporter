@@ -44,6 +44,8 @@ public class HeartGetService {
 		String url = apiHost + "/heart?action=get" + 
 					"&signalid=" + String.valueOf(signalId) +
 					"&access_token=" + applicationProperties.getAccessToken();
+					
+		logger.info(url);
 
 		return url;
 	}

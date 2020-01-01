@@ -61,6 +61,8 @@ public class HeartListService {
 					"&enddate=" + dateToEpoch(now) +
 					"&access_token=" + applicationProperties.getAccessToken();
 
+		logger.info(url);
+
 		return url;
 	}
 
