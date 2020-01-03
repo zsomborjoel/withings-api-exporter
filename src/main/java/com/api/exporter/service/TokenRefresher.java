@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -62,8 +61,10 @@ public class TokenRefresher {
      */
     public String getJsonToken() throws Exception {
         String output;
+        String responseAsString;
         StringBuffer response = new StringBuffer();
 
+        /**
         String curl = "curl --data " +
                                 "\"" +
                                 "grant_type=refresh_token" +
@@ -72,20 +73,37 @@ public class TokenRefresher {
                                 "&refresh_token=" + applicationProperties.getRefreshToken() + 
                                 "\"" +
                                 " \"" + apiTokenHost + "\"";     
+        */
+
+        /**
+         * 2020-01-03 Zsombor Gyurkovics
+         * 
+         * Bad suboptimal solution to get token. Will be changed.  
+         * I had to use this temporary solution becouse the java.lang.Process 
+         * not performing same way on linux and windows with the upper curl command.
+         */
+        String curl = "python curl.py " + 
+                                clientId + " " + 
+                                clientSecret + " " + 
+                                applicationProperties.getRefreshToken() + " " +
+                                apiTokenHost;
 
         Process process = Runtime.getRuntime().exec(curl);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        
+        process.waitFor();
+
         while ((output = bufferedReader.readLine()) != null) {
             response.append(output);
         }
         bufferedReader.close();
 
-        saveToJson(response.toString());
+        responseAsString = response.toString();
 
-        logger.info("New token: " + response.toString());
+        saveToJson(responseAsString);
 
-        return response.toString();
+        logger.info("New token: " + responseAsString);
+
+        return responseAsString;
     }
 
     /**
