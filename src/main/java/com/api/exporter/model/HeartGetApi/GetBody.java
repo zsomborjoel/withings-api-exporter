@@ -38,6 +38,10 @@ public class GetBody {
     @Column(name = "heartget_id", nullable = true)
     private Long id;
 
+    @JsonIgnore
+    @Column(name = "signal_id", nullable = true)
+    private Integer signalId;
+
     @JsonProperty("signal")
     @ElementCollection
     @CollectionTable(name = "heartgetsignal", schema = "withings")
@@ -58,6 +62,14 @@ public class GetBody {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public Integer getSignalId() {
+        return this.signalId;
+    }
+
+    public void setSignalId(Integer signalId) {
+        this.signalId = signalId;
     }
 
     public List<Integer> getSignal() {

@@ -1,7 +1,7 @@
 CREATE SCHEMA IF NOT EXISTS withings;
 
 CREATE TABLE IF NOT EXISTS withings.heartlist (
-    heartlist_id INT PRIMARY KEY,
+    heartlist_id BIGINT PRIMARY KEY,
     device_id VARCHAR(255),
     model INT,
     signal_id INT,
@@ -20,7 +20,7 @@ CREATE INDEX IF NOT EXISTS call_startdate_idx ON withings.heartlist (call_startd
 CREATE INDEX IF NOT EXISTS call_enddate_idx ON withings.heartlist (call_enddate);
 
 CREATE TABLE IF NOT EXISTS withings.heartget (
-    heartget_id INT PRIMARY KEY,
+    heartget_id BIGINT PRIMARY KEY,
     signal_id INT,
     sampling_frequency INT,
     wearposition INT,

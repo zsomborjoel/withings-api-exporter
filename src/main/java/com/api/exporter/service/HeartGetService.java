@@ -70,6 +70,7 @@ public class HeartGetService {
 	private void saveBody(Integer signalId) throws IOException {
 		String url = makeUrl(signalId);
 		GetBody getBody = getBodyData(url);
+		getBody.setSignalId(signalId);
 		
 		heartGetRepository.save(getBody);
 	}
