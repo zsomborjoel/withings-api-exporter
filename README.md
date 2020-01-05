@@ -27,3 +27,12 @@ Non included services are:
 Creating historical database for analytical and visualization purposes from ecg data.
 It can be shown to doctors for diagnostical purposes.
 
+## Visualized ECG data from API
+
+Abnormal ECG
+
+![Abnormal ECG Data](https://github.com/zsomborjoel/Withings-API-Exporter/blob/master/abnormal_ecg.PNG)
+
+Multiply ECG measurement
+
+![Multiply ECG measurement](https://github.com/zsomborjoel/Withings-API-Exporter/blob/master/multiply_ecg_measurement.PNG)
