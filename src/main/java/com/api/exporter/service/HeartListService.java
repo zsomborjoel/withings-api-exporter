@@ -24,9 +24,9 @@ public class HeartListService {
 
 	private static final Logger logger = LoggerFactory.getLogger(HeartListService.class);
 
-	private final LocalDate now = LocalDate.now();
+	private LocalDate now = LocalDate.now();
 
-	private final LocalDate previousDay = now.minusDays(1);
+	private LocalDate previousDay = now.minusDays(1);
 	
     @Autowired
 	private HeartListRepository hlRepository;
