@@ -33,6 +33,6 @@ Abnormal ECG
 
 ![Abnormal ECG Data](https://github.com/zsomborjoel/Withings-API-Exporter/blob/master/abnormal_ecg.PNG)
 
-Multiply ECG measurement
+Multiple ECG measurement
 
-![Multiply ECG measurement](https://github.com/zsomborjoel/Withings-API-Exporter/blob/master/multiply_ecg_measurement.PNG)
+![Multiple ECG measurement](https://github.com/zsomborjoel/Withings-API-Exporter/blob/master/multiply_ecg_measurement.PNG)
