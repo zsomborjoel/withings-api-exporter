@@ -24,9 +24,9 @@ public class HeartListService {
 
 	private static final Logger logger = LoggerFactory.getLogger(HeartListService.class);
 
-	private LocalDate now = LocalDate.now();
+	private LocalDate now;
 
-	private LocalDate previousDay = now.minusDays(1);
+	private LocalDate previousDay;
 	
     @Autowired
 	private HeartListRepository hlRepository;
@@ -107,6 +107,8 @@ public class HeartListService {
 	 * @throws IOException
 	 */
 	private void saveSeries() throws IOException {
+		now = LocalDate.now();
+		previousDay = now.minusDays(1);
 		List<Series> series = getSeriesData();
 		series.forEach(s -> {
 			s.setEnddate(now); 
