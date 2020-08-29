@@ -1,0 +1,39 @@
+https://webhook.site/#!/eed3fb0c-7a6a-45c5-a715-a8956f98a06e/21d247c6-844e-4dec-85d4-8b799a3f12fa/1
+
+
+
+--auth code
+
+https://account.health.nokia.com/oauth2_user/authorize2? response_type=code& redirect_uri=https://webhook.site/5d48c036-f370-46a1-aab8-1f10b80b249c& client_id=b37899460400ba46144eb73fdd2a86e8488345e62001f5ee77fcc7a19c0da082& scope=user.info,user.metrics,user.activity& state=768uyFys
+
+
+
+--access token
+curl --data "grant_type=authorization_code&client_id=b37899460400ba46144eb73fdd2a86e8488345e62001f5ee77fcc7a19c0da082&client_secret=0f272162d7bb7d914a6841f7b334d018a01c40c3948098e2781da38cbcf464c3&code=ea463dbcc0a520f7fba0c7d622e3ce1e9044abed&redirect_uri=https://webhook.site/5d48c036-f370-46a1-aab8-1f10b80b249c" 'https://account.withings.com/oauth2/token'
+
+
+--refresh token
+curl --data "grant_type=refresh_token&client_id=b37899460400ba46144eb73fdd2a86e8488345e62001f5ee77fcc7a19c0da082&client_secret=0f272162d7bb7d914a6841f7b334d018a01c40c3948098e2781da38cbcf464c3&refresh_token=ceac1f2e597419d1500c0bfe45c20e4f00592318" 'https://account.withings.com/oauth2/token'
+
+{"access_token":"96f3771f0338eec3436d204d048e353bdbd8dd0b","expires_in":10800,"token_type":"Bearer","scope":"user.info,user.metrics,user.activity","refresh_token":"ee97ee8d80f8ff547379002dc9a96faaa4a3017b","
+userid":20180732}
+
+--device
+curl -H 'Authorization: Bearer 27b5b9a52add964e0a5bd18a5eae84a4fd29de8d' 'https://wbsapi.withings.net/v2/user?action=getdevice'
+
+
+--sleep
+curl -H 'Authorization: Bearer 008b74c21b160d68a104554e1bed899c8b70c6f4' 'https://wbsapi.withings.net/v2/sleep?action=getsummary&startdateymd=2019-12-24&enddateymd=2019-12-26&data_fields=hr_average'
+
+--heartlist
+curl -H 'Authorization: Bearer 96f3771f0338eec3436d204d048e353bdbd8dd0b' 'https://wbsapi.withings.net/v2/heart?action=list&startdate=1577282195&enddate=1577541395&offset=0'
+
+--heartget
+curl -H 'Authorization: Bearer cd9f147f61ecaf651b33090966a6bfbde910a63f' 'https://wbsapi.withings.net/v2/heart?action=get&signalid=1723197'
+
+--windows
+curl -X POST -H "Authorization: Bearer bc614ab6f17004006871a7d1da39d985172e3d2f" "https://wbsapi.withings.net/v2/heart?action=list&startdate=1577282195&enddate=1577541395&offset=0"
+
+
+curl --data "grant_type=refresh_token&client_id=b37899460400ba46144eb73fdd2a86e8488345e62001f5ee77fcc7a19c0da082&client_secret=0f272162d7bb7d914a6841f7b334d018a01c40c3948098e2781da38cbcf464c3&refresh_token=2aa7753ad58a1fc82cee559a85b88a73e521ce5e" "https://account.withings.com/oauth2/token"
+

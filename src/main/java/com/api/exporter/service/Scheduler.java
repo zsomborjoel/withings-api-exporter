@@ -20,7 +20,7 @@ public class Scheduler {
      * Runs token refresher every 2 hours
      * @throws Exception
      */
-    @Scheduled(fixedRate = 7200000)
+    @Scheduled(fixedRate = 9900000)
     //@Scheduled(cron = "0 0 0/2 1/1 * ? *")
     public void refreshToken() throws Exception {
         tokenRefresher.refresh();
